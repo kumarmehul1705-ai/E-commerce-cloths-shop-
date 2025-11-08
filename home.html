@@ -1,0 +1,96 @@
+# E-commerce-cloths-shop-
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>ClothShop - Home</title>
+  <link rel="stylesheet" href="/static/style.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+
+  <!-- ✅ NAVBAR -->
+  <nav class="navbar">
+    <div class="brand">🛍️ ClothShop</div>
+    <ul class="nav-links">
+      {% if logged_in %}
+        <li>Hello, <b>{{ username }}</b></li>
+        <li><a href="/manage-products">Manage</a></li>
+        <li><a href="/add-product">Add Product</a></li>
+        <li><a href="/logout" class="logout-btn">Logout</a></li>
+      {% else %}
+        <li><a href="/login">Login</a></li>
+        <li><a href="/register">Register</a></li>
+      {% endif %}
+    
+  </nav>
+
+  <!--  HERO SECTION with background carousel -->
+  <section class="hero">
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <h1>✨ Style That Defines You</h1>
+      <p>Shop the latest trends in fashion and elevate your wardrobe.</p>
+    </div>
+  </section>
+
+  <!--  PRODUCT GRID -->
+  <main class="container" id="products">
+    <h2>Latest Products</h2>
+    <div class="products-grid">
+      {% for p in products %}
+      <div class="product-card">
+        
+        {% if p.images and p.images|length > 0 %}
+        <div class="carousel" data-images="{{ p.images | join(',') }}">
+          <img src="{{ p.images[0] }}" alt="{{ p.title }}" class="carousel-img">
+        </div>
+        {% else %}
+        <div class="no-image">No Image</div>
+        {% endif %}
+
+        <div class="product-info">
+          <h3>{{ p.title }}</h3>
+          <p class="brand">{{ p.brand }}</p>
+          <p class="price">₹{{ "%.2f"|format(p.price) }}</p>
+          <a href="/product/{{ p._id|string }}" class="view-btn">View Details</a>
+        </div>
+      </div>
+      {% else %}
+        <p>No products yet.</p>
+      {% endfor %}
+    </div>
+  </main>
+
+  <footer class="footer">
+    <p>© 2025 ClothShop | Designed with ❤️ by MCA </p>
+  </footer>
+
+  <!--  JS: Product carousel -->
+  <script>
+    document.querySelectorAll('.carousel').forEach(carousel => {
+      const images = carousel.dataset.images.split(',');
+      const imgTag = carousel.querySelector('.carousel-img');
+      let index = 0;
+      setInterval(() => {
+        index = (index + 1) % images.length;
+        imgTag.src = images[index].trim();
+      }, 2500);
+    });
+
+    // ✅ Hero background carousel
+    const hero = document.querySelector('.hero');
+    const heroImages = [
+      '/static/uploads/t1.jpg',
+      '/static/uploads/t2.jpg',
+      '/static/uploads/t3.jpg',
+    ];
+    let heroIndex = 0;
+    setInterval(() => {
+      hero.style.backgroundImage = `url(${heroImages[heroIndex]})`;
+      heroIndex = (heroIndex + 1) % heroImages.length;
+    }, 4000);
+  </script>
+
+</body>
+</html>
