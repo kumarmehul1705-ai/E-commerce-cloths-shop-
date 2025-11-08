@@ -1,0 +1,182 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Login - ClothShop</title>
+  <link rel="stylesheet" href="/static/RegLog.css">
+</head>
+<body class="auth-page">
+
+  <!-- NAVBAR -->
+  <nav class="navbar">
+    <div class="brand">🛍️ ClothShop</div>
+    <div class="hamburger" aria-hidden="true">☰</div>
+    <ul class="nav-links">
+      <li><a href="/">Home</a></li>
+
+      {% if logged_in %}
+        <li>Hello, <b>{{ username }}</b></li>
+        <li><a href="/manage-products">Manage</a></li>
+        <li><a href="/add-product">Add Product</a></li>
+        <li><a href="/logout" class="logout-btn">Logout</a></li>
+      {% else %}
+        <!-- intentionally empty to keep auth pages clean -->
+      {% endif %}
+    </ul>
+  </nav>
+
+  <!-- AUTH LAYOUT -->
+  <div class="container auth-page">
+    <aside class="visual" aria-hidden="true">
+      <div class="overlay-card">
+        <h1>Welcome back! 👋</h1>
+        <p>Sign in to continue shopping your favourite styles.</p>
+        <ul class="bullets">
+          <li>✅ Free shipping over ₹999</li>
+          <li>✨ 30-day returns</li>
+          <li>🛍️ New drops weekly</li>
+        </ul>
+      </div>
+    </aside>
+
+    <main class="auth" role="main">
+      <div class="card" role="region" aria-label="Login form">
+        <div class="brand">
+          <img src="/static/logo.png" alt="ClothShop logo" onerror="this.style.display='none'">
+          <div>
+            <h2>ClothShop</h2>
+            <div class="tag">Shop the look — fast &amp; secure</div>
+          </div>
+        </div>
+
+        <h3 class="title">Login to your account</h3>
+        <form method="POST" action="/login" class="form" autocomplete="on">
+          <input type="email" name="email" placeholder="Email" required>
+          <input type="password" name="password" placeholder="Password" required>
+
+          <div class="meta-row">
+            <label class="remember"><input type="checkbox" name="remember"> Remember me</label>
+            <a class="forgot" href="#">Forgot?</a>
+          </div>
+
+          <button class="primary" type="submit">Login</button>
+
+          <div class="divider">or continue with</div>
+
+          <!-- SOCIALS: Google / Facebook / Instagram -->
+          <div class="socials" aria-hidden="false">
+            <!-- Google -->
+            <button type="button" class="social-btn google" data-provider="google" aria-label="Continue with Google">
+              <svg viewBox="0 0 533.5 544.3" aria-hidden="true" focusable="false">
+                <path fill="#4285F4" d="M533.5 278.4c0-17.4-1.6-34.1-4.6-50.3H272.1v95.2h147.3c-6.4 34.5-25.9 63.7-55.6 83v68h89.8c52.6-48.5 82.4-119.8 82.4-195.9z"/>
+                <path fill="#34A853" d="M272.1 544.3c73.5 0 135.3-24.3 180.4-66l-89.8-68c-25 17-57 27-90.6 27-69.6 0-128.6-47-149.6-110.1H32v69.1C76.7 482.1 168.5 544.3 272.1 544.3z"/>
+                <path fill="#FBBC05" d="M122.5 332.9c-12.4-36.7-12.4-76.4 0-113.1V150.7H32c-39.3 78.5-39.3 171.1 0 249.6l90.5-67.4z"/>
+                <path fill="#EA4335" d="M272.1 110.5c38.8 0 73.7 13.4 101.3 39.9l75.9-75.9C420.5 31.6 353.6 0 272.1 0 168.5 0 76.7 62.2 32 150.7l90.5 69.1c21-63.1 80-110.1 149.6-110.1z"/>
+              </svg>
+              <span class="social-label">Continue with Google</span>
+            </button>
+
+            <!-- Facebook -->
+            <button type="button" class="social-btn facebook" data-provider="facebook" aria-label="Continue with Facebook">
+              <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                <path fill="#fff" d="M22 12.07C22 6.48 17.52 2 11.93 2 6.33 2 2 6.48 2 12.07 2 17.02 5.66 21.13 10.44 22v-7.02H8.08v-2.91h2.36V9.6c0-2.33 1.37-3.61 3.47-3.61.95 0 1.95.17 1.95.17v2.15h-1.1c-1.09 0-1.43.67-1.43 1.36v1.63h2.44l-.39 2.91h-2.05V22C18.34 21.13 22 17.02 22 12.07z"/>
+              </svg>
+              <span class="social-label">Continue with Facebook</span>
+            </button>
+
+            <!-- Instagram -->
+            <button type="button" class="social-btn instagram" data-provider="instagram" aria-label="Continue with Instagram">
+              <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                <path fill="#fff" d="M7 2h10a5 5 0 015 5v10a5 5 0 01-5 5H7a5 5 0 01-5-5V7a5 5 0 015-5zm5 6.2A4.8 4.8 0 108 13a4.8 4.8 0 004-4.8zM17.5 6.2a1.2 1.2 0 11-1.2-1.2 1.2 1.2 0 011.2 1.2z"/>
+              </svg>
+              <span class="social-label">Continue with Instagram</span>
+            </button>
+          </div>
+
+          <p class="small">Don't have an account? <a href="/register">Create one</a></p>
+
+          <p class="footer">© 2025 ClothShop Admin Panel. All rights reserved.</p>
+        </form>
+      </div>
+    </main>
+  </div>
+
+  <!-- Parallax + tilt + subtle animate background -->
+  <script>
+  (function(){
+    const visual = document.querySelector('.visual');
+    const card = document.querySelector('.card');
+    let w = window.innerWidth, h = window.innerHeight;
+
+    function onMove(e){
+      const x = (e.clientX / w) - 0.5;
+      const y = (e.clientY / h) - 0.5;
+      if(visual){
+        visual.style.transform = `translate3d(${x * -8}px, ${y * -6}px, 0) scale(1.02)`;
+        visual.style.filter = `brightness(${1 - Math.abs(y)*0.05})`;
+      }
+      if(card){
+        const rx = (y * 6);
+        const ry = (x * -8);
+        card.style.transform = `rotateX(${rx}deg) rotateY(${ry}deg) translateZ(0)`;
+        card.style.boxShadow = `${-ry*2}px ${rx*2 + 10}px 40px rgba(2,6,23,0.12)`;
+      }
+    }
+
+    function reset(){
+      if(visual){ visual.style.transform = ''; visual.style.filter = ''; }
+      if(card){ card.style.transform = ''; card.style.boxShadow = ''; }
+    }
+
+    let raf = null;
+    window.addEventListener('pointermove', (ev)=> {
+      if(raf) cancelAnimationFrame(raf);
+      raf = requestAnimationFrame(()=> onMove(ev));
+    });
+    window.addEventListener('pointerleave', ()=> { if(raf) cancelAnimationFrame(raf); reset(); });
+    window.addEventListener('resize', ()=> { w = window.innerWidth; h = window.innerHeight; reset(); });
+
+    const root = document.documentElement;
+    let t = 0;
+    function animateBg(){
+      t += 0.0035;
+      const gx = 50 + Math.sin(t) * 10;
+      const gy = 50 + Math.cos(t*0.7) * 6;
+      root.style.setProperty('--bgpos-x', gx + '%');
+      root.style.setProperty('--bgpos-y', gy + '%');
+      requestAnimationFrame(animateBg);
+    }
+    animateBg();
+
+    // social button ripple + demo handler
+    function rippleEffect(e){
+      const btn = e.currentTarget;
+      const rect = btn.getBoundingClientRect();
+      const r = Math.max(rect.width, rect.height);
+      const circle = document.createElement('span');
+      circle.className = 'ripple';
+      circle.style.width = circle.style.height = (r*1.6) + 'px';
+      circle.style.left = (e.clientX - rect.left - r*0.8) + 'px';
+      circle.style.top = (e.clientY - rect.top - r*0.8) + 'px';
+      btn.appendChild(circle);
+      setTimeout(()=> circle.style.transform = 'scale(1.6)', 10);
+      setTimeout(()=> { circle.remove(); }, 600);
+    }
+
+    document.querySelectorAll('.social-btn').forEach(btn=>{
+      btn.addEventListener('click', function(e){
+        rippleEffect(e);
+        const provider = btn.dataset.provider;
+        // TODO: replace with your OAuth redirect
+        // e.g. window.location = `/auth/${provider}`;
+        console.log('Social login click:', provider);
+      });
+    });
+
+  })();
+  </script>
+</body>
+</html>
